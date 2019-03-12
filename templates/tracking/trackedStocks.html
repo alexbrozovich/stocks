@@ -1,0 +1,12 @@
+{% if user_tracked %}
+    <ul>
+    {% for ticker in user_tracked %}
+        <a href='/stocks/{{ ticker }}'><li>{{ ticker }}</li></a>
+    {% endfor %}
+    </ul>
+    <p><a href='/stocks/add/tracknewstock'>Track a new stock</a></p>
+    <p><a href='/stocks/tracked_graphs'>Check out your graphs</a></p>
+{% else %}
+    <p>You don't have any tracked stocks</p>
+{% endif %}
+<p><a href="{% url 'stocks:home' %}">Home</a></p>

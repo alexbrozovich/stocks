@@ -1,0 +1,44 @@
+<head>
+    {% load static %}
+    <script src="{% static "js/Chart.js" %}"></script>
+</head>
+{% if user_tracked %}
+    <ul>
+    <h1>{{ user_tracked }}</h1>
+    </ul>
+    <ul>
+    {% for price in price_data %}
+        <p>{{ price }}</p>
+    {% endfor %}
+    </ul>
+    <canvas id="myChart" width="400" height="400"></canvas>
+{% else %}
+    <p>You don't have any tracked stocks</p>
+{% endif %}
+<p><a href="{% url 'stocks:home' %}">Home</a></p>
+<script>
+    var priceData = {{ price_data|safe }};
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: '# of Votes',
+                data: priceData,
+                showline: false,
+                
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+  
