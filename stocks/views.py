@@ -51,33 +51,3 @@ def add_tracked_stock(request):
 def home(request):
     return render(request, 'home.html')
 
-def tracked_graphs(request):
-    userID = request.user.username
-    all_tracked_list = TrackedStock.objects.all()
-    user_tracked = []
-    for item in all_tracked_list:
-        if str(item.owning_user) == str(userID):
-            user_tracked.append(item.ticker)
-    user_tracked = user_tracked[2]
-
-    urlStart = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='
-    urlEnd = '&apikey=XX4Q236EB0T9AGVT'
-    priceData = []
-    for ticker_id in user_tracked:
-        url = urlStart + ticker_id + urlEnd
-        response = requests.get(url)
-        data = json.loads(response.text)
-        
-        priceSeries = []
-        #data['Time Series (Daily)'][currentDate]['1. open']
-        keys = data['Time Series (Daily)']
-        for key in keys:
-            priceSeries.append(float(data['Time Series (Daily)'][key]['1. open']))
-        priceData = priceSeries
-
-    context = {
-        'user_tracked': user_tracked,
-        'price_data': priceData,
-        }
-
-    return render(request, 'tracking/trackedGraphs.html', context)

@@ -5,8 +5,8 @@
     {% endfor %}
     </ul>
     <p><a href='/stocks/add/tracknewstock'>Track a new stock</a></p>
-    <p><a href='/stocks/tracked_graphs'>Check out your graphs</a></p>
 {% else %}
     <p>You don't have any tracked stocks</p>
+    <p><a href='/stocks/add/tracknewstock'>Track a new stock</a></p>
 {% endif %}
 <p><a href="{% url 'stocks:home' %}">Home</a></p>
